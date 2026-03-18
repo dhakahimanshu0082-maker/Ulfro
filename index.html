@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulfro — Any Task, Anytime, Anywhere</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B00;
+    --orange-light: #FF8C00;
+    --blue: #1A237E;
+    --blue-light: #283593;
+    --white: #FFFFFF;
+    --off-white: #F8F6F2;
+    --gray: #6B7280;
+    --dark: #111111;
+    --card-bg: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 0 5%;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--orange);
+    letter-spacing: -1px;
+  }
+
+  .logo span { color: var(--blue); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--orange); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600 !important;
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(255,107,0,0.4) !important;
+    color: white !important;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 5px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--dark);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 100px 5% 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fff 0%, #FFF4EC 50%, #EEF0FF 100%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,107,0,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(26,35,126,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-content {
+    max-width: 650px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,107,0,0.1);
+    color: var(--orange);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255,107,0,0.2);
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.2rem;
+    color: var(--dark);
+    letter-spacing: -2px;
+  }
+
+  .hero h1 .highlight {
+    color: var(--orange);
+    position: relative;
+  }
+
+  .hero h1 .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 0; right: 0;
+    height: 4px;
+    background: var(--orange);
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: white;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    box-shadow: 0 4px 20px rgba(255,107,0,0.3);
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,107,0,0.4);
+    background: var(--orange-light);
+  }
+
+  .btn-secondary {
+    background: white;
+    color: var(--blue);
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    border: 2px solid rgba(26,35,126,0.2);
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    border-color: var(--blue);
+    box-shadow: 0 8px 30px rgba(26,35,126,0.15);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--orange);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+
+  /* HOW IT WORKS */
+  .section {
+    padding: 80px 5%;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: rgba(255,107,0,0.08);
+    color: var(--orange);
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.8rem;
+    color: var(--dark);
+  }
+
+  .section-sub {
+    color: var(--gray);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin-bottom: 3rem;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .step-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(255,107,0,0.12);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+  }
+
+  .step-desc {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* CATEGORIES */
+  .categories-section {
+    background: var(--blue);
+    padding: 80px 5%;
+    color: white;
+  }
+
+  .categories-section .section-label {
+    background: rgba(255,255,255,0.15);
+    color: white;
+  }
+
+  .categories-section .section-title { color: white; }
+  .categories-section .section-sub { color: rgba(255,255,255,0.7); }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .category-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .category-card:hover {
+    background: rgba(255,107,0,0.3);
+    border-color: var(--orange);
+    transform: translateY(-3px);
+  }
+
+  .category-card .cat-icon {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .category-card .cat-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* WHY ULFRO */
+  .why-section { background: white; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    background: var(--off-white);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.3s;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.07);
+  }
+
+  .feature-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(255,107,0,0.1);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .feature-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+  }
+
+  .feature-desc {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* TASK FORM SECTION */
+  .form-section {
+    background: linear-gradient(135deg, #FFF4EC, #EEF0FF);
+    padding: 80px 5%;
+  }
+
+  .form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .form-info h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    color: var(--dark);
+  }
+
+  .form-info p {
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+
+  .form-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--dark);
+  }
+
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    background: var(--off-white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--orange);
+    background: white;
+  }
+
+  .form-group textarea { height: 90px; resize: none; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--orange);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 50px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(255,107,0,0.3);
+  }
+
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255,107,0,0.4);
+  }
+
+  /* SAFETY */
+  .safety-section {
+    padding: 80px 5%;
+    background: white;
+  }
+
+  .safety-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .safety-card {
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: all 0.3s;
+  }
+
+  .safety-card.client { background: rgba(255,107,0,0.04); border-color: rgba(255,107,0,0.15); }
+  .safety-card.tasker { background: rgba(26,35,126,0.04); border-color: rgba(26,35,126,0.15); }
+  .safety-card.legal { background: rgba(255,193,7,0.05); border-color: rgba(255,193,7,0.2); }
+
+  .safety-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--dark);
+  }
+
+  .safety-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .safety-item::before {
+    content: '✓';
+    color: #22C55E;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .legal-warning {
+    background: rgba(255,193,7,0.1);
+    border: 1px solid rgba(255,193,7,0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 0.82rem;
+    color: #92400E;
+    line-height: 1.5;
+  }
+
+  /* PAYMENT */
+  .payment-section {
+    background: var(--off-white);
+    padding: 80px 5%;
+  }
+
+  .payment-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .payment-step {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: white;
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s;
+  }
+
+  .payment-step:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+  }
+
+  .payment-step-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(255,107,0,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .payment-step-text strong {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+
+  .payment-step-text span {
+    font-size: 0.82rem;
+    color: var(--gray);
+  }
+
+  .commission-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--orange);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  /* TASKER EARN */
+  .earn-section {
+    background: var(--blue);
+    padding: 80px 5%;
+    color: white;
+    text-align: center;
+  }
+
+  .earn-section .section-title { color: white; font-size: clamp(2rem, 5vw, 3rem); }
+
+  .earn-cards {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+  }
+
+  .earn-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    width: 200px;
+    transition: all 0.3s;
+  }
+
+  .earn-card:hover {
+    background: rgba(255,107,0,0.3);
+    border-color: var(--orange);
+    transform: translateY(-5px);
+  }
+
+  .earn-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--orange);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .earn-task {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* TASKER SIGNUP */
+  .tasker-section {
+    background: white;
+    padding: 80px 5%;
+  }
+
+  .tasker-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .tasker-form-card {
+    background: var(--off-white);
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .tasker-form-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--dark);
+  }
+
+  .tasker-form-card p {
+    font-size: 0.88rem;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .categories-select {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .cat-checkbox {
+    display: none;
+  }
+
+  .cat-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: white;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--dark);
+  }
+
+  .cat-checkbox:checked + .cat-label {
+    background: rgba(255,107,0,0.1);
+    border-color: var(--orange);
+    color: var(--orange);
+    font-weight: 600;
+  }
+
+  .consent-box {
+    background: rgba(26,35,126,0.04);
+    border: 1px solid rgba(26,35,126,0.15);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-size: 0.83rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .consent-box input { margin-top: 2px; flex-shrink: 0; }
+
+  /* WHATSAPP */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 999;
+    background: #25D366;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 35px rgba(37,211,102,0.7); }
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: white;
+    padding: 40px 5%;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-tagline {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    list-style: none;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--orange); }
+
+  .footer-copy {
+    color: rgba(255,255,255,0.3);
+    font-size: 0.8rem;
+  }
+
+  /* SUCCESS MESSAGE */
+  .success-msg {
+    display: none;
+    background: #DCFCE7;
+    border: 1px solid #86EFAC;
+    color: #166534;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { padding: 90px 5% 50px; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero-stats { gap: 1.5rem; }
+
+    .form-container { grid-template-columns: 1fr; gap: 2rem; }
+
+    .categories-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .earn-card { width: 150px; }
+
+    .payment-steps { max-width: 100%; }
+  }
+
+  /* SCROLL ANIMATION */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">UL<span>FRO</span></div>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#safety">Safety</a></li>
+    <li><a href="#earn">Earn Money</a></li>
+    <li><a href="#post-task" class="nav-cta">Post a Task</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🚀 Launching in Delhi Soon!</div>
+    <h1>Any Task,<br><span class="highlight">Done on Ulfro</span></h1>
+    <p>Get any task done or earn money by helping others — no professional skills required. Delhi's easiest task marketplace.</p>
+    <div class="hero-btns">
+      <a href="#post-task" class="btn-primary">📋 Post a Task</a>
+      <a href="#earn" class="btn-secondary">💰 Start Earning</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">₹50</div>
+        <div class="stat-label">Starting From</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Task Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Payment Safe</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-label">Process</div>
+  <h2 class="section-title">How Does It Work?</h2>
+  <p class="section-sub">3 simple steps — get any task done effortlessly!</p>
+  <div class="steps animate-on-scroll">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <span class="step-icon">📋</span>
+      <div class="step-title">Post Your Task</div>
+      <div class="step-desc">Describe your task — any work, any budget, any time. Fill a simple form in under 2 minutes.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <span class="step-icon">🤝</span>
+      <div class="step-title">Get Matched</div>
+      <div class="step-desc">Nearby verified taskers will see your task and apply. You pick the best match for your needs.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <span class="step-icon">✅</span>
+      <div class="step-title">Done & Paid</div>
+      <div class="step-desc">Once the task is complete, confirm it and payment is automatically released. 100% safe!</div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="categories">
+  <div class="section-label">Categories</div>
+  <h2 class="section-title">Any Task. No Limits.</h2>
+  <p class="section-sub" style="margin-bottom:2.5rem;">No professional skill needed — anyone can do these tasks!</p>
+  <div class="categories-grid animate-on-scroll">
+    <!-- Delivery & Errands -->
+    <div class="category-card"><span class="cat-icon">📦</span><div class="cat-name">Delivery & Pickup</div></div>
+    <div class="category-card"><span class="cat-icon">🛒</span><div class="cat-name">Shopping & Errands</div></div>
+    <div class="category-card"><span class="cat-icon">🚗</span><div class="cat-name">Ride & Drop</div></div>
+    <div class="category-card"><span class="cat-icon">📮</span><div class="cat-name">Courier & Post</div></div>
+    <div class="category-card"><span class="cat-icon">🧳</span><div class="cat-name">Luggage Help</div></div>
+    <div class="category-card"><span class="cat-icon">🏪</span><div class="cat-name">Store Pickup</div></div>
+    <!-- Education -->
+    <div class="category-card"><span class="cat-icon">📝</span><div class="cat-name">Assignment Help</div></div>
+    <div class="category-card"><span class="cat-icon">🎓</span><div class="cat-name">Tutoring & Coaching</div></div>
+    <div class="category-card"><span class="cat-icon">📚</span><div class="cat-name">Notes Making</div></div>
+    <div class="category-card"><span class="cat-icon">🖥️</span><div class="cat-name">Online Class Help</div></div>
+    <div class="category-card"><span class="cat-icon">✏️</span><div class="cat-name">Proofreading</div></div>
+    <div class="category-card"><span class="cat-icon">🔬</span><div class="cat-name">Lab File Work</div></div>
+    <!-- Home Help -->
+    <div class="category-card"><span class="cat-icon">🧹</span><div class="cat-name">Cleaning & Sweeping</div></div>
+    <div class="category-card"><span class="cat-icon">🧺</span><div class="cat-name">Laundry & Ironing</div></div>
+    <div class="category-card"><span class="cat-icon">🍳</span><div class="cat-name">Cooking Help</div></div>
+    <div class="category-card"><span class="cat-icon">🧴</span><div class="cat-name">Dishes & Kitchen</div></div>
+    <div class="category-card"><span class="cat-icon">🪴</span><div class="cat-name">Gardening & Plants</div></div>
+    <div class="category-card"><span class="cat-icon">🪣</span><div class="cat-name">Water & Supplies</div></div>
+    <!-- Tech & Digital -->
+    <div class="category-card"><span class="cat-icon">💻</span><div class="cat-name">Tech Help & Setup</div></div>
+    <div class="category-card"><span class="cat-icon">📱</span><div class="cat-name">Phone & App Help</div></div>
+    <div class="category-card"><span class="cat-icon">🖨️</span><div class="cat-name">Printing & Scanning</div></div>
+    <div class="category-card"><span class="cat-icon">📋</span><div class="cat-name">Data Entry & Typing</div></div>
+    <div class="category-card"><span class="cat-icon">🔍</span><div class="cat-name">Research & Info</div></div>
+    <div class="category-card"><span class="cat-icon">📊</span><div class="cat-name">Excel & Spreadsheets</div></div>
+    <!-- Creative -->
+    <div class="category-card"><span class="cat-icon">🎨</span><div class="cat-name">Basic Design</div></div>
+    <div class="category-card"><span class="cat-icon">📸</span><div class="cat-name">Photography</div></div>
+    <div class="category-card"><span class="cat-icon">🎬</span><div class="cat-name">Video Recording</div></div>
+    <div class="category-card"><span class="cat-icon">✂️</span><div class="cat-name">Basic Video Editing</div></div>
+    <div class="category-card"><span class="cat-icon">🖼️</span><div class="cat-name">Poster Making</div></div>
+    <div class="category-card"><span class="cat-icon">📣</span><div class="cat-name">Social Media Help</div></div>
+    <!-- Repairs & Maintenance -->
+    <div class="category-card"><span class="cat-icon">🔧</span><div class="cat-name">Minor Repairs</div></div>
+    <div class="category-card"><span class="cat-icon">💡</span><div class="cat-name">Electrical Fixes</div></div>
+    <div class="category-card"><span class="cat-icon">🚰</span><div class="cat-name">Plumbing Help</div></div>
+    <div class="category-card"><span class="cat-icon">🪑</span><div class="cat-name">Furniture Assembly</div></div>
+    <div class="category-card"><span class="cat-icon">🎨</span><div class="cat-name">Wall Painting</div></div>
+    <div class="category-card"><span class="cat-icon">🔑</span><div class="cat-name">Locksmith Help</div></div>
+    <!-- Personal & Lifestyle -->
+    <div class="category-card"><span class="cat-icon">🐾</span><div class="cat-name">Pet Care & Walking</div></div>
+    <div class="category-card"><span class="cat-icon">👶</span><div class="cat-name">Babysitting</div></div>
+    <div class="category-card"><span class="cat-icon">👴</span><div class="cat-name">Elder Care Help</div></div>
+    <div class="category-card"><span class="cat-icon">💊</span><div class="cat-name">Medicine Pickup</div></div>
+    <div class="category-card"><span class="cat-icon">🏥</span><div class="cat-name">Hospital Companion</div></div>
+    <div class="category-card"><span class="cat-icon">💇</span><div class="cat-name">Personal Styling</div></div>
+    <!-- Events & Social -->
+    <div class="category-card"><span class="cat-icon">🎉</span><div class="cat-name">Event Help</div></div>
+    <div class="category-card"><span class="cat-icon">🎂</span><div class="cat-name">Party Planning</div></div>
+    <div class="category-card"><span class="cat-icon">🤝</span><div class="cat-name">Standing in Line</div></div>
+    <div class="category-card"><span class="cat-icon">📜</span><div class="cat-name">Form Filling Help</div></div>
+    <div class="category-card"><span class="cat-icon">🏛️</span><div class="cat-name">Govt Office Help</div></div>
+    <div class="category-card"><span class="cat-icon">📰</span><div class="cat-name">Newspaper Delivery</div></div>
+    <!-- Food -->
+    <div class="category-card"><span class="cat-icon">🍱</span><div class="cat-name">Food & Tiffin</div></div>
+    <div class="category-card"><span class="cat-icon">🥗</span><div class="cat-name">Meal Prep Help</div></div>
+    <div class="category-card"><span class="cat-icon">☕</span><div class="cat-name">Tea & Snacks</div></div>
+    <!-- Moving -->
+    <div class="category-card"><span class="cat-icon">📦</span><div class="cat-name">Packing & Moving</div></div>
+    <div class="category-card"><span class="cat-icon">🏠</span><div class="cat-name">Home Shifting Help</div></div>
+    <div class="category-card"><span class="cat-icon">🪜</span><div class="cat-name">Heavy Lifting</div></div>
+    <!-- Other -->
+    <div class="category-card"><span class="cat-icon">⚙️</span><div class="cat-name">Any Other Task</div></div>
+  </div>
+</section>
+
+<!-- WHY ULFRO -->
+<section class="section why-section">
+  <div class="section-label">Why Ulfro</div>
+  <h2 class="section-title">Why Choose Ulfro?</h2>
+  <p class="section-sub">Your task and your money — both are completely safe with us!</p>
+  <div class="features-grid animate-on-scroll">
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">100% Payment Protection</div>
+      <div class="feature-desc">Your money stays with Ulfro until the task is complete. Payment is released only after your confirmation.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <div class="feature-title">Aadhar Verified Taskers</div>
+      <div class="feature-desc">Every tasker is verified with Aadhar — no fake identities, complete safety guaranteed for every task.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⭐</div>
+      <div class="feature-title">Rating & Review System</div>
+      <div class="feature-desc">Rate your tasker after every task. Top rated taskers appear first — quality is always guaranteed!</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Starting from just ₹50</div>
+      <div class="feature-desc">Even the smallest task can be posted — no minimum limit. Any budget, any task, anytime!</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📍</div>
+      <div class="feature-title">Hyperlocal Matching</div>
+      <div class="feature-desc">Get matched with nearby taskers — faster delivery, local trust, and quick task completion every time.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚨</div>
+      <div class="feature-title">24hr Dispute Resolution</div>
+      <div class="feature-desc">Any problem? Our team resolves it within 24 hours. Your money is never at risk — ever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- POST A TASK -->
+<section class="form-section" id="post-task">
+  <div class="form-container">
+    <div class="form-info">
+      <div class="section-label">Post a Task</div>
+      <h2>Post Your Task Now</h2>
+      <p>Any task — big or small — post it on Ulfro and someone nearby will get it done for you!</p>
+      <ul style="list-style:none; display:flex; flex-direction:column; gap:0.8rem;">
+        <li style="display:flex; gap:0.7rem; align-items:flex-start; font-size:0.9rem; color:#6B7280;">
+          <span style="color:#FF6B00; font-weight:700; flex-shrink:0;">✓</span>
+          Fill the form — takes just 2 minutes
+        </li>
+        <li style="display:flex; gap:0.7rem; align-items:flex-start; font-size:0.9rem; color:#6B7280;">
+          <span style="color:#FF6B00; font-weight:700; flex-shrink:0;">✓</span>
+          We will contact you on WhatsApp
+        </li>
+        <li style="display:flex; gap:0.7rem; align-items:flex-start; font-size:0.9rem; color:#6B7280;">
+          <span style="color:#FF6B00; font-weight:700; flex-shrink:0;">✓</span>
+          We match you with the best tasker
+        </li>
+        <li style="display:flex; gap:0.7rem; align-items:flex-start; font-size:0.9rem; color:#6B7280;">
+          <span style="color:#FF6B00; font-weight:700; flex-shrink:0;">✓</span>
+          Pay only after task is completed
+        </li>
+      </ul>
+    </div>
+    <div class="form-card">
+      <h3>📋 Task Details</h3>
+      <form id="taskForm">
+        <div class="form-group">
+          <label>Task Title *</label>
+          <input type="text" placeholder="e.g. Need someone to write my assignment" required>
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select required>
+            <option value="">Select a category</option>
+            <option>📦 Delivery & Pickup</option>
+            <option>🛒 Shopping & Errands</option>
+            <option>🚗 Ride & Drop</option>
+            <option>📮 Courier & Post</option>
+            <option>📝 Assignment Help</option>
+            <option>🎓 Tutoring & Coaching</option>
+            <option>📚 Notes Making</option>
+            <option>✏️ Proofreading</option>
+            <option>🔬 Lab File Work</option>
+            <option>🧹 Cleaning & Sweeping</option>
+            <option>🧺 Laundry & Ironing</option>
+            <option>🍳 Cooking Help</option>
+            <option>🪴 Gardening & Plants</option>
+            <option>💻 Tech Help & Setup</option>
+            <option>📱 Phone & App Help</option>
+            <option>🖨️ Printing & Scanning</option>
+            <option>📋 Data Entry & Typing</option>
+            <option>🔍 Research & Info</option>
+            <option>📊 Excel & Spreadsheets</option>
+            <option>🎨 Basic Design</option>
+            <option>📸 Photography</option>
+            <option>🎬 Video Recording</option>
+            <option>✂️ Basic Video Editing</option>
+            <option>🖼️ Poster Making</option>
+            <option>🔧 Minor Repairs</option>
+            <option>💡 Electrical Fixes</option>
+            <option>🚰 Plumbing Help</option>
+            <option>🪑 Furniture Assembly</option>
+            <option>🐾 Pet Care & Walking</option>
+            <option>👶 Babysitting</option>
+            <option>👴 Elder Care Help</option>
+            <option>💊 Medicine Pickup</option>
+            <option>🏥 Hospital Companion</option>
+            <option>🎉 Event Help</option>
+            <option>🎂 Party Planning</option>
+            <option>🤝 Standing in Line</option>
+            <option>📜 Form Filling Help</option>
+            <option>🏛️ Govt Office Help</option>
+            <option>🍱 Food & Tiffin</option>
+            <option>📦 Packing & Moving</option>
+            <option>🪜 Heavy Lifting</option>
+            <option>⚙️ Any Other Task</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea placeholder="Describe your task in detail..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Area / Location *</label>
+          <input type="text" placeholder="e.g. Rajouri Garden, Delhi" required>
+        </div>
+        <div class="form-group">
+          <label>Budget (₹) *</label>
+          <input type="number" placeholder="e.g. 200" min="50" required>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number *</label>
+          <input type="tel" placeholder="10 digit number" maxlength="10" required>
+        </div>
+        <button type="submit" class="form-submit">🚀 Submit My Task</button>
+        <div class="success-msg" id="taskSuccess">
+          ✅ Task submitted! We will contact you on WhatsApp within 1 hour!
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT -->
+<section class="payment-section" id="payment">
+  <div style="text-align:center; max-width:700px; margin:0 auto;">
+    <div class="section-label">Payment</div>
+    <h2 class="section-title">100% Safe Payment System</h2>
+    <p class="section-sub" style="margin:0 auto 2.5rem;">Your money is always protected — released only after task completion!</p>
+    <div class="payment-steps animate-on-scroll">
+      <div class="payment-step">
+        <div class="payment-step-icon">🔒</div>
+        <div class="payment-step-text">
+          <strong>Client Pays Ulfro First</strong>
+          <span>Money goes to Ulfro securely — not directly to the tasker</span>
+        </div>
+      </div>
+      <div class="payment-step">
+        <div class="payment-step-icon">💪</div>
+        <div class="payment-step-text">
+          <strong>Tasker Completes the Work</strong>
+          <span>Your verified tasker gets the job done</span>
+        </div>
+      </div>
+      <div class="payment-step">
+        <div class="payment-step-icon">👍</div>
+        <div class="payment-step-text">
+          <strong>Client Confirms Completion</strong>
+          <span>Happy with the work? Click "Done" to confirm</span>
+        </div>
+      </div>
+      <div class="payment-step">
+        <div class="payment-step-icon">💰</div>
+        <div class="payment-step-text">
+          <strong>Tasker Receives Payment</strong>
+          <span>Minus 15% Ulfro platform fee — rest goes directly to tasker!</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:2rem;">
+      <span class="commission-badge">✅ 100% Refund if task incomplete</span>
+      <span class="commission-badge" style="background:var(--blue);">🔒 UPI Payment Only</span>
+    </div>
+  </div>
+</section>
+
+<!-- EARN SECTION -->
+<section class="earn-section" id="earn">
+  <div class="section-label">Earn Money</div>
+  <h2 class="section-title">Earn Money — No Skills Needed! 💰</h2>
+  <p style="color:rgba(255,255,255,0.7); font-size:1rem; max-width:500px; margin:0 auto;">No degree, no experience — just willingness to work. You set your own price!</p>
+  <div class="earn-cards">
+    <div class="earn-card">
+      <span class="earn-amount">📦</span>
+      <div class="earn-task">Delivery & Pickup</div>
+    </div>
+    <div class="earn-card">
+      <span class="earn-amount">📝</span>
+      <div class="earn-task">Assignment Help</div>
+    </div>
+    <div class="earn-card">
+      <span class="earn-amount">🛒</span>
+      <div class="earn-task">Shopping & Errands</div>
+    </div>
+    <div class="earn-card">
+      <span class="earn-amount">📸</span>
+      <div class="earn-task">Photography</div>
+    </div>
+    <div class="earn-card">
+      <span class="earn-amount">🎓</span>
+      <div class="earn-task">Tutoring</div>
+    </div>
+    <div class="earn-card">
+      <span class="earn-amount">🔧</span>
+      <div class="earn-task">Repairs & Fixing</div>
+    </div>
+  </div>
+  <p style="color:rgba(255,255,255,0.6); font-size:0.9rem; margin-top:2rem; max-width:500px; margin-left:auto; margin-right:auto;">You choose the tasks you want to do — earn as much as you want, whenever you want!</p>
+</section>
+
+<!-- SAFETY -->
+<section class="safety-section" id="safety">
+  <div class="section-label">Safety</div>
+  <h2 class="section-title">Your Safety is Our Priority</h2>
+  <p class="section-sub">Both clients and taskers are fully protected on Ulfro!</p>
+  <div class="safety-grid animate-on-scroll">
+    <div class="safety-card client">
+      <h3>🛡️ For Clients</h3>
+      <div class="safety-item">All taskers are Aadhar verified</div>
+      <div class="safety-item">Real photos and identity on record</div>
+      <div class="safety-item">Star rating and review system</div>
+      <div class="safety-item">Report any suspicious behaviour</div>
+      <div class="safety-item">100% payment protection always</div>
+      <div class="safety-item">24 hour dispute resolution</div>
+    </div>
+    <div class="safety-card tasker">
+      <h3>💼 For Taskers</h3>
+      <div class="safety-item">Payment guaranteed after completion</div>
+      <div class="safety-item">Safe escrow system protects you</div>
+      <div class="safety-item">Client identity is also verified</div>
+      <div class="safety-item">Rate your client after every task</div>
+      <div class="safety-item">Report unfair treatment anytime</div>
+      <div class="safety-item">Ulfro team available 24/7</div>
+    </div>
+    <div class="safety-card legal">
+      <h3>⚠️ Our Safety Promise</h3>
+      <div class="safety-item">Complete records of all users maintained</div>
+      <div class="safety-item">Any fraud results in permanent ban</div>
+      <div class="safety-item">Legal action taken in serious cases</div>
+      <div class="safety-item">Keeping the community safe is our duty</div>
+      <div class="legal-warning">
+        🤝 Ulfro is an honest community. Everyone here helps each other — there is no place for cheating or fraud!
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BECOME A TASKER -->
+<section class="tasker-section" id="become-tasker">
+  <div style="text-align:center; margin-bottom:2.5rem;">
+    <div class="section-label">Join as Tasker</div>
+    <h2 class="section-title">Become a Tasker & Start Earning!</h2>
+    <p class="section-sub" style="margin:0 auto;">No degree needed — just the willingness to work!</p>
+  </div>
+  <div class="tasker-form-container">
+    <div class="tasker-form-card">
+      <h3>🙋 Tasker Registration</h3>
+      <p>Register for free — no charges whatsoever!</p>
+      <form id="taskerForm">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number *</label>
+          <input type="tel" placeholder="10 digit number" maxlength="10" required>
+        </div>
+        <div class="form-group">
+          <label>Age *</label>
+          <input type="number" placeholder="e.g. 19" min="14" required>
+        </div>
+        <div class="consent-box" id="parentConsent" style="display:none;">
+          <input type="checkbox" id="consentCheck">
+          <label for="consentCheck">I have my parent's permission to work on Ulfro ✅</label>
+        </div>
+        <div class="form-group">
+          <label>Area / Location *</label>
+          <input type="text" placeholder="e.g. Lajpat Nagar, Delhi" required>
+        </div>
+        <div class="form-group">
+          <label>Aadhar Number * (Safe & Secure 🔒)</label>
+          <input type="text" placeholder="12 digit Aadhar number" maxlength="12" required>
+        </div>
+        <div class="form-group">
+          <label>Which tasks can you do? (Select all that apply)</label>
+          <div class="categories-select">
+            <input type="checkbox" class="cat-checkbox" id="c1"><label class="cat-label" for="c1">📦 Delivery</label>
+            <input type="checkbox" class="cat-checkbox" id="c2"><label class="cat-label" for="c2">📝 Assignment</label>
+            <input type="checkbox" class="cat-checkbox" id="c3"><label class="cat-label" for="c3">🛒 Shopping</label>
+            <input type="checkbox" class="cat-checkbox" id="c4"><label class="cat-label" for="c4">🧹 Cleaning</label>
+            <input type="checkbox" class="cat-checkbox" id="c5"><label class="cat-label" for="c5">🔧 Repairs</label>
+            <input type="checkbox" class="cat-checkbox" id="c6"><label class="cat-label" for="c6">🎨 Design</label>
+            <input type="checkbox" class="cat-checkbox" id="c7"><label class="cat-label" for="c7">📸 Photography</label>
+            <input type="checkbox" class="cat-checkbox" id="c8"><label class="cat-label" for="c8">💻 Tech Help</label>
+            <input type="checkbox" class="cat-checkbox" id="c9"><label class="cat-label" for="c9">🐾 Pet Care</label>
+            <input type="checkbox" class="cat-checkbox" id="c10"><label class="cat-label" for="c10">🎓 Teaching</label>
+            <input type="checkbox" class="cat-checkbox" id="c11"><label class="cat-label" for="c11">🎉 Events</label>
+            <input type="checkbox" class="cat-checkbox" id="c12"><label class="cat-label" for="c12">⚙️ Any Other</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tell us about yourself</label>
+          <textarea placeholder="e.g. I am a DU student, I can help with deliveries and assignments..."></textarea>
+        </div>
+        <button type="submit" class="form-submit" style="background:var(--blue);">✅ Register as a Tasker</button>
+        <div class="success-msg" id="taskerSuccess">
+          🎉 Registration successful! We will contact you on WhatsApp within 24 hours!
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ULFRO</div>
+  <div class="footer-tagline">Any Task, Anytime, Anywhere — Launching in Delhi Soon! 🚀</div>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#safety">Safety</a></li>
+    <li><a href="#post-task">Post a Task</a></li>
+    <li><a href="#become-tasker">Become a Tasker</a></li>
+  </ul>
+  <div class="footer-copy">© 2024 Ulfro. All rights reserved. | Made with ❤️ in Delhi, India</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/919999999999?text=Hi%20Ulfro!%20Mujhe%20help%20chahiye" 
+   class="whatsapp-float" target="_blank" title="WhatsApp Support">💬</a>
+
+<script>
+  // Scroll Animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+  // Age based parental consent
+  document.querySelector('input[placeholder="e.g. 19"]').addEventListener('input', function() {
+    const age = parseInt(this.value);
+    const consentBox = document.getElementById('parentConsent');
+    if (age >= 14 && age < 18) {
+      consentBox.style.display = 'flex';
+    } else {
+      consentBox.style.display = 'none';
+    }
+  });
+
+  // Task Form Submit
+  document.getElementById('taskForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('taskSuccess').style.display = 'block';
+    this.reset();
+    setTimeout(() => {
+      document.getElementById('taskSuccess').style.display = 'none';
+    }, 5000);
+  });
+
+  // Tasker Form Submit
+  document.getElementById('taskerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('taskerSuccess').style.display = 'block';
+    this.reset();
+    setTimeout(() => {
+      document.getElementById('taskerSuccess').style.display = 'none';
+    }, 5000);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '65px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'white';
+    links.style.padding = '1rem 5%';
+    links.style.borderBottom = '1px solid rgba(0,0,0,0.1)';
+    links.style.gap = '1rem';
+  }
+</script>
+</body>
+</html>
