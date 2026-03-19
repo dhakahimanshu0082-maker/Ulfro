@@ -1447,13 +1447,9 @@
 
   // Tasker Form Submit
   document.getElementById('taskerForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('taskerSuccess').style.display = 'block';
-    this.reset();
-    setTimeout(() => {
-      document.getElementById('taskerSuccess').style.display = 'none';
-    }, 5000);
-  });
+  e.preventDefault();
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSdtiHWhxZPoi7NQMi11vB7XIdNI2vXIQ3KCw8ickrcd6TKsLg/viewform?usp=publish-editor', '_blank');
+});
 
   // Mobile menu
   function toggleMenu() {
