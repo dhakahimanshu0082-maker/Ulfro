@@ -1440,14 +1440,10 @@
   });
 
   // Task Form Submit
-  document.getElementById('taskForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('taskSuccess').style.display = 'block';
-    this.reset();
-    setTimeout(() => {
-      document.getElementById('taskSuccess').style.display = 'none';
-    }, 5000);
-  });
+ document.getElementById('taskForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  window.open('https://docs.google.com/forms/d/e/1FAIpQLSdu4fv0yAXBx7QDFG5MMXSPCqJtg4YLh7WrXsNFREYoTihcAg/viewform?usp=dialog', '_blank');
+});
 
   // Tasker Form Submit
   document.getElementById('taskerForm').addEventListener('submit', function(e) {
