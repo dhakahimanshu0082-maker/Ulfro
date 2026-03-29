@@ -1,10 +1,29 @@
 'use client';
 
 import Link from 'next/link';
-import { NOTIFICATION_ICONS } from '../lib/notifications';
+import {
+  ClipboardList, UserPlus, CircleCheck, XCircle, Rocket, PartyPopper,
+  Wallet, Lock, Star, AlertTriangle, Info
+} from 'lucide-react';
+
+const ICON_MAP = {
+  task_posted: <ClipboardList size={18} />,
+  application_received: <UserPlus size={18} />,
+  application_accepted: <CircleCheck size={18} />,
+  application_rejected: <XCircle size={18} />,
+  task_started: <Rocket size={18} />,
+  task_completed: <PartyPopper size={18} />,
+  payment_received: <Wallet size={18} />,
+  payment_held: <Lock size={18} />,
+  review_received: <Star size={18} />,
+  dispute_opened: <AlertTriangle size={18} />,
+  dispute_resolved: <CircleCheck size={18} />,
+  info: <Info size={18} />,
+  warning: <AlertTriangle size={18} />,
+};
 
 export default function NotificationItem({ notification, onMarkRead }) {
-  const icon = NOTIFICATION_ICONS[notification.type] || 'ℹ️';
+  const icon = ICON_MAP[notification.type] || <Info size={18} />;
 
   return (
     <div

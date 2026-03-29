@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '../../components/Navbar';
 import { verifyOtp } from '../../lib/auth';
+import { KeyRound, CircleCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 function VerifyContent() {
@@ -67,7 +68,7 @@ function VerifyContent() {
       setOtp(['', '', '', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
     } else {
-      toast.success('Verified! 🎉');
+      toast.success('Verified!');
       if (isSignup) {
         router.push(`/signup/?step=profile&role=${role}`);
       } else {
@@ -81,7 +82,7 @@ function VerifyContent() {
       <Navbar />
       <div className="auth-page">
         <div className="auth-card" style={{ textAlign: 'center' }}>
-          <h1>Enter OTP 🔐</h1>
+          <h1><KeyRound size={22} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 8 }} />Enter OTP</h1>
           <p className="auth-subtitle">
             We sent an 8-digit code to<br />
             <strong style={{ color: 'var(--dark)' }}>{email}</strong>
@@ -108,7 +109,7 @@ function VerifyContent() {
             onClick={() => handleVerify(otp.join(''))}
             disabled={loading || otp.some(d => d === '')}
           >
-            {loading ? 'Verifying...' : '✅ Verify & Continue'}
+            {loading ? 'Verifying...' : <><CircleCheck size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Verify & Continue</>}
           </button>
 
           <p style={{ marginTop: '1.5rem', fontSize: '0.85rem', color: 'var(--gray)' }}>

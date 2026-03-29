@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { MessageCircle, Heart } from 'lucide-react';
 
 export default function Footer() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919999999999';
@@ -9,7 +10,7 @@ export default function Footer() {
     <>
       <footer>
         <div className="footer-logo">ULFRO</div>
-        <div className="footer-tagline">Any Task, Anytime, Anywhere — Now Live in Delhi! 🚀</div>
+        <div className="footer-tagline">Any Task, Anytime, Anywhere — Now Live in Delhi!</div>
         <ul className="footer-links">
           <li><Link href="/#how-it-works">How It Works</Link></li>
           <li><Link href="/#categories">Categories</Link></li>
@@ -17,7 +18,7 @@ export default function Footer() {
           <li><Link href="/post-task/">Post a Task</Link></li>
           <li><Link href="/signup/">Become a Tasker</Link></li>
         </ul>
-        <div className="footer-copy">© {new Date().getFullYear()} Ulfro. All rights reserved. | Made with ❤️ in Delhi, India</div>
+        <div className="footer-copy">© {new Date().getFullYear()} Ulfro. All rights reserved. | Made with <Heart size={13} style={{ display: 'inline', verticalAlign: '-1px', fill: '#EF4444', color: '#EF4444' }} /> in Delhi, India</div>
       </footer>
 
       {/* WhatsApp Float */}
@@ -28,7 +29,7 @@ export default function Footer() {
         rel="noopener noreferrer"
         title="WhatsApp Support"
       >
-        💬
+        <MessageCircle size={24} />
       </a>
     </>
   );

@@ -9,6 +9,7 @@ import CategoryPicker from '../../components/CategoryPicker';
 import { useAuth } from '../../hooks/useAuth';
 import { createTask } from '../../lib/tasks';
 import { DELHI_AREAS } from '../../lib/categories';
+import { ClipboardList, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function PostTaskPage() {
@@ -39,7 +40,7 @@ export default function PostTaskPage() {
     });
     setLoading(false);
     if (error) return toast.error(error.message);
-    toast.success('Task posted! 🎉');
+    toast.success('Task posted!');
     router.push(`/task/?id=${data.id}`);
   };
 
@@ -49,7 +50,7 @@ export default function PostTaskPage() {
       <div className="page-container">
         <div className="page-content" style={{ maxWidth: 700 }}>
           <div className="page-header">
-            <h1>Post a New Task 📋</h1>
+            <h1><ClipboardList size={24} style={{ display: 'inline', verticalAlign: '-4px', marginRight: 8 }} /> Post a New Task</h1>
             <p>Describe your task and let taskers come to you</p>
           </div>
           <form onSubmit={handleSubmit}>
@@ -99,7 +100,7 @@ export default function PostTaskPage() {
               </div>
             </div>
             <button type="submit" className="form-submit" disabled={loading}>
-              {loading ? 'Posting...' : '🚀 Post Task Now'}
+              {loading ? 'Posting...' : <><Send size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Post Task Now</>}
             </button>
           </form>
         </div>

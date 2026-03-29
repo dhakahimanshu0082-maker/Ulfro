@@ -5,6 +5,7 @@ import Navbar from '../../../components/Navbar';
 import ProtectedRoute from '../../../components/ProtectedRoute';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import { supabase } from '../../../lib/supabase';
+import { LayoutDashboard, Users, ClipboardList, CreditCard, AlertTriangle } from 'lucide-react';
 
 export default function AdminTasksPage() {
   const [tasks, setTasks] = useState([]);
@@ -21,11 +22,11 @@ export default function AdminTasksPage() {
       <Navbar />
       <div className="page-container"><div className="admin-layout">
         <div className="admin-sidebar">
-          <Link href="/admin/" className="admin-nav-item">📊 Dashboard</Link>
-          <Link href="/admin/users/" className="admin-nav-item">👥 Users</Link>
-          <Link href="/admin/tasks/" className="admin-nav-item admin-active">📋 Tasks</Link>
-          <Link href="/admin/payments/" className="admin-nav-item">💳 Payments</Link>
-          <Link href="/admin/disputes/" className="admin-nav-item">⚠️ Disputes</Link>
+          <Link href="/admin/" className="admin-nav-item"><LayoutDashboard size={16} style={{ marginRight: 6, verticalAlign: '-3px' }} /> Dashboard</Link>
+          <Link href="/admin/users/" className="admin-nav-item"><Users size={16} style={{ marginRight: 6, verticalAlign: '-3px' }} /> Users</Link>
+          <Link href="/admin/tasks/" className="admin-nav-item admin-active"><ClipboardList size={16} style={{ marginRight: 6, verticalAlign: '-3px' }} /> Tasks</Link>
+          <Link href="/admin/payments/" className="admin-nav-item"><CreditCard size={16} style={{ marginRight: 6, verticalAlign: '-3px' }} /> Payments</Link>
+          <Link href="/admin/disputes/" className="admin-nav-item"><AlertTriangle size={16} style={{ marginRight: 6, verticalAlign: '-3px' }} /> Disputes</Link>
         </div>
         <div className="admin-content">
           <h1 style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: '1.5rem', marginBottom: '1.5rem' }}>All Tasks ({tasks.length})</h1>

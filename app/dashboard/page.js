@@ -10,6 +10,7 @@ import TaskCard from '../../components/TaskCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import { getClientTasks, getTaskStats } from '../../lib/tasks';
+import { ClipboardList, Circle, RefreshCw, CircleCheck } from 'lucide-react';
 
 export default function ClientDashboard() {
   const { user, profile } = useAuth();
@@ -37,7 +38,7 @@ export default function ClientDashboard() {
       <div className="page-container">
         <div className="page-content">
           <div className="page-header">
-            <h1>Hi, {profile?.full_name?.split(' ')[0] || 'there'} 👋</h1>
+            <h1>Hi, {profile?.full_name?.split(' ')[0] || 'there'}</h1>
             <p>Manage your tasks and track progress</p>
           </div>
 
@@ -46,10 +47,10 @@ export default function ClientDashboard() {
           ) : (
             <>
               <div className="dashboard-grid">
-                <StatsCard icon="📋" label="Total Tasks" value={stats?.total || 0} color="var(--orange)" />
-                <StatsCard icon="🟢" label="Open" value={stats?.open || 0} color="#22C55E" />
-                <StatsCard icon="🔄" label="In Progress" value={stats?.assigned || 0} color="#3B82F6" />
-                <StatsCard icon="✅" label="Completed" value={stats?.completed || 0} color="#8B5CF6" />
+                <StatsCard icon={<ClipboardList size={22} />} label="Total Tasks" value={stats?.total || 0} color="var(--orange)" />
+                <StatsCard icon={<Circle size={22} />} label="Open" value={stats?.open || 0} color="#22C55E" />
+                <StatsCard icon={<RefreshCw size={22} />} label="In Progress" value={stats?.assigned || 0} color="#3B82F6" />
+                <StatsCard icon={<CircleCheck size={22} />} label="Completed" value={stats?.completed || 0} color="#8B5CF6" />
               </div>
 
               <div className="dashboard-section">
@@ -59,7 +60,7 @@ export default function ClientDashboard() {
                 </div>
                 {tasks.length === 0 ? (
                   <div className="empty-state">
-                    <div className="empty-state-icon">📋</div>
+                    <div className="empty-state-icon"><ClipboardList size={40} /></div>
                     <div className="empty-state-title">No tasks yet</div>
                     <div className="empty-state-desc">Post your first task and get it done!</div>
                     <Link href="/post-task/" className="btn-primary">Post a Task</Link>

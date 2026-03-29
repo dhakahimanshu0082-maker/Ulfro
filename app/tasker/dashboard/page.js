@@ -11,6 +11,7 @@ import LoadingSpinner from '../../../components/LoadingSpinner';
 import { useAuth } from '../../../hooks/useAuth';
 import { getTaskerTasks, getTaskStats } from '../../../lib/tasks';
 import { getTaskerEarnings } from '../../../lib/payments';
+import { Wallet, ClipboardList, RefreshCw, CircleCheck, Search, FileText } from 'lucide-react';
 
 export default function TaskerDashboard() {
   const { user, profile } = useAuth();
@@ -39,17 +40,17 @@ export default function TaskerDashboard() {
       <div className="page-container">
         <div className="page-content">
           <div className="page-header">
-            <h1>Hey, {profile?.full_name?.split(' ')[0] || 'Tasker'} 💪</h1>
+            <h1>Hey, {profile?.full_name?.split(' ')[0] || 'Tasker'}</h1>
             <p>Your tasks and earnings at a glance</p>
           </div>
 
           {loading ? <div className="page-loading"><LoadingSpinner /></div> : (
             <>
               <div className="dashboard-grid">
-                <StatsCard icon="💰" label="Total Earned" value={`₹${earnings.total}`} color="var(--orange)" />
-                <StatsCard icon="📋" label="Total Tasks" value={stats?.total || 0} color="var(--blue)" />
-                <StatsCard icon="🔄" label="Active" value={stats?.active || 0} color="#F59E0B" />
-                <StatsCard icon="✅" label="Completed" value={stats?.completed || 0} color="var(--green)" />
+                <StatsCard icon={<Wallet size={22} />} label="Total Earned" value={`₹${earnings.total}`} color="var(--orange)" />
+                <StatsCard icon={<ClipboardList size={22} />} label="Total Tasks" value={stats?.total || 0} color="var(--blue)" />
+                <StatsCard icon={<RefreshCw size={22} />} label="Active" value={stats?.active || 0} color="#F59E0B" />
+                <StatsCard icon={<CircleCheck size={22} />} label="Completed" value={stats?.completed || 0} color="var(--green)" />
               </div>
 
               <div className="dashboard-section">
@@ -57,9 +58,9 @@ export default function TaskerDashboard() {
                   <h2>Quick Actions</h2>
                 </div>
                 <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                  <Link href="/tasker/browse/" className="btn-primary">🔍 Browse Tasks</Link>
-                  <Link href="/tasker/applications/" className="btn-secondary">📝 My Applications</Link>
-                  <Link href="/tasker/earnings/" className="btn-secondary">💰 Earnings</Link>
+                  <Link href="/tasker/browse/" className="btn-primary"><Search size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Browse Tasks</Link>
+                  <Link href="/tasker/applications/" className="btn-secondary"><FileText size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> My Applications</Link>
+                  <Link href="/tasker/earnings/" className="btn-secondary"><Wallet size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Earnings</Link>
                 </div>
               </div>
 
@@ -69,7 +70,7 @@ export default function TaskerDashboard() {
                 </div>
                 {assignments.filter(a => ['assigned', 'in_progress'].includes(a.task?.status)).length === 0 ? (
                   <div className="empty-state">
-                    <div className="empty-state-icon">🔍</div>
+                    <div className="empty-state-icon"><Search size={40} /></div>
                     <div className="empty-state-title">No active tasks</div>
                     <div className="empty-state-desc">Browse available tasks and start earning!</div>
                     <Link href="/tasker/browse/" className="btn-primary">Browse Tasks</Link>

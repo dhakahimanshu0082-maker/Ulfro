@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import { signUpWithEmail } from '../../lib/auth';
+import { Send, CircleCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
@@ -37,12 +38,12 @@ export default function LoginPage() {
       <Navbar />
       <div className="auth-page">
         <div className="auth-card">
-          <h1>Welcome Back 👋</h1>
+          <h1>Welcome Back</h1>
           <p className="auth-subtitle">Log in to your Ulfro account</p>
 
           {sent ? (
             <div className="auth-success">
-              ✅ OTP sent to <strong>{email}</strong>! Check your inbox.
+              <CircleCheck size={18} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> OTP sent to <strong>{email}</strong>! Check your inbox.
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
@@ -58,7 +59,7 @@ export default function LoginPage() {
                 />
               </div>
               <button type="submit" className="form-submit" disabled={loading}>
-                {loading ? 'Sending OTP...' : '📨 Send Login OTP'}
+                {loading ? 'Sending OTP...' : <><Send size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Send Login OTP</>}
               </button>
             </form>
           )}

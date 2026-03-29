@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../hooks/useAuth';
 import { useNotifications } from '../hooks/useNotifications';
+import { Bell, User, LayoutDashboard, ClipboardList, Search, Settings, LogOut, ChevronDown } from 'lucide-react';
 
 export default function Navbar() {
   const { user, profile, signOut, loading } = useAuth();
@@ -39,8 +40,8 @@ export default function Navbar() {
         {!loading && user && (
           <>
             <li style={{ position: 'relative' }}>
-              <Link href="/notifications/" onClick={() => setMenuOpen(false)} style={{ position: 'relative' }}>
-                🔔
+              <Link href="/notifications/" onClick={() => setMenuOpen(false)} style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
+                <Bell size={20} />
                 {unreadCount > 0 && (
                   <span className="notification-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
                 )}
@@ -52,33 +53,33 @@ export default function Navbar() {
                 className="profile-btn"
               >
                 <span className="profile-avatar">
-                  {profile?.full_name ? profile.full_name[0].toUpperCase() : '👤'}
+                  {profile?.full_name ? profile.full_name[0].toUpperCase() : <User size={16} />}
                 </span>
                 <span className="profile-name">{profile?.full_name || 'Profile'}</span>
-                <span style={{ fontSize: '0.6rem' }}>▼</span>
+                <ChevronDown size={12} />
               </button>
 
               {profileDropdown && (
                 <div className="profile-dropdown">
                   <Link href={dashboardLink} onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
-                    📊 Dashboard
+                    <LayoutDashboard size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Dashboard
                   </Link>
                   {profile?.role === 'client' && (
                     <Link href="/post-task/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
-                      📋 Post a Task
+                      <ClipboardList size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Post a Task
                     </Link>
                   )}
                   {profile?.role === 'tasker' && (
                     <Link href="/tasker/browse/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
-                      🔍 Browse Tasks
+                      <Search size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Browse Tasks
                     </Link>
                   )}
                   <Link href="/profile/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
-                    👤 My Profile
+                    <User size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> My Profile
                   </Link>
                   {profile?.role === 'admin' && (
                     <Link href="/admin/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
-                      ⚙️ Admin Panel
+                      <Settings size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Admin Panel
                     </Link>
                   )}
                   <hr style={{ border: 'none', borderTop: '1px solid #eee', margin: '0.3rem 0' }} />
@@ -91,7 +92,7 @@ export default function Navbar() {
                     }}
                     className="dropdown-signout"
                   >
-                    🚪 Sign Out
+                    <LogOut size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Sign Out
                   </button>
                 </div>
               )}

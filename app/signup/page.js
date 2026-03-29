@@ -4,8 +4,9 @@ import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { signUpWithEmail, createProfile } from '../../lib/auth';
+import { signUpWithEmail, updateProfile } from '../../lib/auth';
 import { useAuth } from '../../hooks/useAuth';
+import { ClipboardList, Wallet, Send, CircleCheck, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { DELHI_AREAS } from '../../lib/categories';
 
@@ -71,7 +72,7 @@ function SignupContent() {
         <div className="auth-card">
           {step === 1 && !user && (
             <>
-              <h1>Join Ulfro 🚀</h1>
+              <h1>Join Ulfro</h1>
               <p className="auth-subtitle">Start getting tasks done or earning money</p>
 
               {/* Role Selection */}
@@ -80,7 +81,7 @@ function SignupContent() {
                   className={`role-card ${role === 'client' ? 'role-selected' : ''}`}
                   onClick={() => setRole('client')}
                 >
-                  <span className="role-card-icon">📋</span>
+                  <span className="role-card-icon"><ClipboardList size={28} /></span>
                   <div className="role-card-title">I Need Help</div>
                   <div className="role-card-desc">Post tasks and get them done</div>
                 </div>
@@ -88,7 +89,7 @@ function SignupContent() {
                   className={`role-card ${role === 'tasker' ? 'role-selected' : ''}`}
                   onClick={() => setRole('tasker')}
                 >
-                  <span className="role-card-icon">💰</span>
+                  <span className="role-card-icon"><Wallet size={28} /></span>
                   <div className="role-card-title">I Want to Earn</div>
                   <div className="role-card-desc">Complete tasks and earn money</div>
                 </div>
@@ -107,7 +108,7 @@ function SignupContent() {
                   />
                 </div>
                 <button type="submit" className="form-submit" disabled={loading || !role}>
-                  {loading ? 'Sending OTP...' : '📨 Continue with Email'}
+                  {loading ? 'Sending OTP...' : <><Send size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Continue with Email</>}
                 </button>
               </form>
 
@@ -119,18 +120,18 @@ function SignupContent() {
 
           {(step === 2 || user) && (
             <>
-              <h1>Complete Your Profile ✨</h1>
+              <h1><Sparkles size={22} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Complete Your Profile</h1>
               <p className="auth-subtitle">Tell us a bit about yourself</p>
 
               <form onSubmit={handleProfileSubmit}>
                 {!role && (
                   <div className="role-cards" style={{ marginBottom: '1rem' }}>
                     <div className={`role-card ${role === 'client' ? 'role-selected' : ''}`} onClick={() => setRole('client')}>
-                      <span className="role-card-icon">📋</span>
+                      <span className="role-card-icon"><ClipboardList size={24} /></span>
                       <div className="role-card-title">Client</div>
                     </div>
                     <div className={`role-card ${role === 'tasker' ? 'role-selected' : ''}`} onClick={() => setRole('tasker')}>
-                      <span className="role-card-icon">💰</span>
+                      <span className="role-card-icon"><Wallet size={24} /></span>
                       <div className="role-card-title">Tasker</div>
                     </div>
                   </div>
@@ -154,7 +155,7 @@ function SignupContent() {
                   </select>
                 </div>
                 <button type="submit" className="form-submit" disabled={loading}>
-                  {loading ? 'Saving...' : '✅ Complete Signup'}
+                  {loading ? 'Saving...' : <><CircleCheck size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Complete Signup</>}
                 </button>
               </form>
             </>

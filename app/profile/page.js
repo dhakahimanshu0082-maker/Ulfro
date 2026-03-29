@@ -7,6 +7,7 @@ import RatingStars from '../../components/RatingStars';
 import { useAuth } from '../../hooks/useAuth';
 import { updateProfile } from '../../lib/auth';
 import { DELHI_AREAS } from '../../lib/categories';
+import { Mail, Phone, MapPin, UserCog, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function ProfilePage() {
@@ -50,12 +51,12 @@ export default function ProfilePage() {
         ) : (
           <div className="detail-card">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-              <div><strong>📧 Email:</strong> {profile?.email}</div>
-              <div><strong>📱 Phone:</strong> {profile?.phone || 'Not set'}</div>
-              <div><strong>📍 Location:</strong> {profile?.city || 'Not set'}</div>
-              <div><strong>🎭 Role:</strong> <span style={{ textTransform: 'capitalize' }}>{profile?.role}</span></div>
+              <div><strong><Mail size={15} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Email:</strong> {profile?.email}</div>
+              <div><strong><Phone size={15} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Phone:</strong> {profile?.phone || 'Not set'}</div>
+              <div><strong><MapPin size={15} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Location:</strong> {profile?.city || 'Not set'}</div>
+              <div><strong><UserCog size={15} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Role:</strong> <span style={{ textTransform: 'capitalize' }}>{profile?.role}</span></div>
             </div>
-            <button className="btn-primary" style={{ marginTop: '1rem' }} onClick={() => setEditing(true)}>✏️ Edit Profile</button>
+            <button className="btn-primary" style={{ marginTop: '1rem' }} onClick={() => setEditing(true)}><Pencil size={15} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Edit Profile</button>
           </div>
         )}
       </div></div>

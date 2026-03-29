@@ -1,10 +1,12 @@
 'use client';
 
+import { CreditCard, Lock, Wallet, Undo2, Check, Smartphone } from 'lucide-react';
+
 const ESCROW_STEPS = [
-  { key: 'no_payment', label: 'Awaiting Payment', icon: '💳', desc: 'Client needs to make UPI payment' },
-  { key: 'in_escrow', label: 'Funds Held Safely', icon: '🔒', desc: 'Money is safe with Ulfro' },
-  { key: 'paid', label: 'Payment Released', icon: '💰', desc: 'Tasker has received payment' },
-  { key: 'refunded', label: 'Refunded', icon: '↩️', desc: 'Payment returned to client' },
+  { key: 'no_payment', label: 'Awaiting Payment', icon: <CreditCard size={18} />, desc: 'Client needs to make UPI payment' },
+  { key: 'in_escrow', label: 'Funds Held Safely', icon: <Lock size={18} />, desc: 'Money is safe with Ulfro' },
+  { key: 'paid', label: 'Payment Released', icon: <Wallet size={18} />, desc: 'Tasker has received payment' },
+  { key: 'refunded', label: 'Refunded', icon: <Undo2 size={18} />, desc: 'Payment returned to client' },
 ];
 
 export default function EscrowStatus({ status, amount = 0, showDetails = true }) {
@@ -29,7 +31,7 @@ export default function EscrowStatus({ status, amount = 0, showDetails = true })
               }`}
             >
               <div className="escrow-step-dot">
-                <span>{i < currentStep ? '✓' : step.icon}</span>
+                <span>{i < currentStep ? <Check size={14} /> : step.icon}</span>
               </div>
               <div className="escrow-step-info">
                 <div className="escrow-step-label">{step.label}</div>
@@ -42,7 +44,7 @@ export default function EscrowStatus({ status, amount = 0, showDetails = true })
 
       {status === 'no_payment' && (
         <div className="escrow-action-hint">
-          <p>📱 Make UPI payment to Ulfro and share the reference number</p>
+          <p><Smartphone size={15} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 4 }} /> Make UPI payment to Ulfro and share the reference number</p>
         </div>
       )}
     </div>
