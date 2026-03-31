@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from './LoadingSpinner';
+import toast from 'react-hot-toast';
 
 export default function ProtectedRoute({ children, requiredRole = null, redirectTo = '/login/' }) {
   const { user, profile, loading } = useAuth();
@@ -27,6 +28,7 @@ export default function ProtectedRoute({ children, requiredRole = null, redirect
       }
       // Wrong role check (but allow admin to access everything)
       if (requiredRole && profile && profile.role !== requiredRole && profile.role !== 'admin') {
+        toast.error(`Access denied. Allowed roles: ${requiredRole}`);
         router.push('/');
         return;
       }
