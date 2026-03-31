@@ -60,7 +60,8 @@ function VerifyContent() {
     if (!email) return toast.error('Email not found');
     setLoading(true);
 
-    const { data, error } = await verifyOtp(email, code);
+    const otpType = isSignup ? 'signup' : 'magiclink';
+    const { data, error } = await verifyOtp(email, code, otpType);
     setLoading(false);
 
     if (error) {
