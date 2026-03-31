@@ -73,7 +73,7 @@ function TaskerTaskClient() {
                 Contact the Ulfro Admin directly to negotiate and receive the assignment.
               </p>
               <a 
-                href={`https://wa.me/919079317277?text=${encodeURIComponent(`Hi! I'm interested in the Task: "${task.title}" (ID: ${task.id}). My proposed price is ₹`)}`} 
+                href={`https://wa.me/919079317277?text=${encodeURIComponent(`Hi! I'm interested in the Task: "${task.title}" (ID: ${task.id}).\n\nTask Link: https://ulfro.vercel.app/task/?id=${task.id}\n\nMy proposed price is ₹`)}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn-primary"
