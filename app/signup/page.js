@@ -4,10 +4,11 @@ import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
-import { signUpWithEmail, updateProfile } from '../../lib/auth';
+import { signUpWithPassword, updateProfile } from '../../lib/auth';
 import { useAuth } from '../../hooks/useAuth';
 import { ClipboardList, Wallet, Send, CircleCheck, Sparkles } from 'lucide-react';
 import toast from 'react-hot-toast';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { DELHI_AREAS } from '../../lib/categories';
 
 function SignupContent() {
@@ -20,8 +21,9 @@ function SignupContent() {
   const [step, setStep] = useState(stepParam === 'profile' && user ? 2 : 1);
   const [loading, setLoading] = useState(false);
 
-  // Step 1: Email
+  // Step 1: Account
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // Step 2: Profile
   const [role, setRole] = useState(initialRole);
@@ -29,15 +31,15 @@ function SignupContent() {
   const [phone, setPhone] = useState('');
   const [city, setCity] = useState('');
 
-  const handleSendOtp = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (!email) return toast.error('Enter your email');
+    if (!email || !password) return toast.error('Enter your email and password');
     setLoading(true);
-    const { error } = await signUpWithEmail(email);
+    const { error } = await signUpWithPassword(email, password);
     setLoading(false);
     if (error) return toast.error(error.message);
-    toast.success('OTP sent!');
-    router.push(`/verify/?email=${encodeURIComponent(email)}&signup=true&role=${role}`);
+    toast.success('Account created!');
+    setStep(2);
   };
 
   const handleProfileSubmit = async (e) => {
@@ -95,7 +97,7 @@ function SignupContent() {
                 </div>
               </div>
 
-              <form onSubmit={handleSendOtp}>
+              <form onSubmit={handleSignup}>
                 <div className="form-group">
                   <label htmlFor="signup-email">Email Address</label>
                   <input
@@ -107,8 +109,19 @@ function SignupContent() {
                     required
                   />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="signup-password">Password</label>
+                  <input
+                    id="signup-password"
+                    type="password"
+                    placeholder="Create a strong password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
                 <button type="submit" className="form-submit" disabled={loading || !role}>
-                  {loading ? 'Sending OTP...' : <><Send size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Continue with Email</>}
+                  {loading ? 'Creating account...' : <><CircleCheck size={16} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6 }} /> Create Account</>}
                 </button>
               </form>
 
@@ -168,7 +181,7 @@ function SignupContent() {
 
 export default function SignupPage() {
   return (
-    <Suspense fallback={<div className="page-loading"><p>Loading...</p></div>}>
+    <Suspense fallback={<div className="page-loading"><LoadingSpinner /></div>}>
       <SignupContent />
     </Suspense>
   );

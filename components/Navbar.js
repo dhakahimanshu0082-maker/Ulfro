@@ -64,11 +64,9 @@ export default function Navbar() {
                   <Link href={dashboardLink} onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
                     <LayoutDashboard size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Dashboard
                   </Link>
-                  {profile?.role === 'client' && (
-                    <Link href="/post-task/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
-                      <ClipboardList size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Post a Task
-                    </Link>
-                  )}
+                  <Link href="/post-task/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
+                    <ClipboardList size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Post a Task
+                  </Link>
                   {profile?.role === 'tasker' && (
                     <Link href="/tasker/browse/" onClick={() => { setProfileDropdown(false); setMenuOpen(false); }}>
                       <Search size={15} style={{ marginRight: 6, verticalAlign: '-2px' }} /> Browse Tasks

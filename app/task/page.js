@@ -10,7 +10,7 @@ import RatingStars from '../../components/RatingStars';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useAuth } from '../../hooks/useAuth';
 import { getTask } from '../../lib/tasks';
-import { acceptApplication, confirmCompletion } from '../../lib/applications';
+import { acceptApplication, confirmCompletion, manualAssignTask } from '../../lib/applications';
 import { getEscrowStatus } from '../../lib/payments';
 import { createReview, hasReviewed } from '../../lib/reviews';
 import { getCategoryById } from '../../lib/categories';
@@ -20,7 +20,7 @@ import toast from 'react-hot-toast';
 function TaskDetailClient() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [task, setTask] = useState(null);
   const [escrow, setEscrow] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,6 +28,8 @@ function TaskDetailClient() {
   const [reviewComment, setReviewComment] = useState('');
   const [alreadyReviewed, setAlreadyReviewed] = useState(false);
   const [actionLoading, setActionLoading] = useState(false);
+  const [adminPhone, setAdminPhone] = useState('');
+  const [adminPrice, setAdminPrice] = useState('');
 
   useEffect(() => { if (id) loadData(); else setLoading(false); }, [id, user]);
 
@@ -56,6 +58,18 @@ function TaskDetailClient() {
     setActionLoading(false);
     if (error) return toast.error(error.message);
     toast.success('Task confirmed!'); loadData();
+  };
+
+  const handleAdminAssign = async (e) => {
+    e.preventDefault();
+    if (!adminPhone || !adminPrice) return toast.error('Enter phone and exact price');
+    setActionLoading(true);
+    const { error } = await manualAssignTask(task.id, adminPhone, parseInt(adminPrice));
+    setActionLoading(false);
+    if (error) return toast.error(error.message);
+    toast.success('Task successfully assigned to Tasker!'); 
+    setAdminPhone(''); setAdminPrice('');
+    loadData();
   };
 
   const handleReview = async (e) => {
@@ -111,6 +125,26 @@ function TaskDetailClient() {
             <div className="detail-card">
               <h3>Applications ({task.applications.length})</h3>
               {task.applications.map(app => <ApplicationCard key={app.id} application={app} isClient onAccept={handleAccept} />)}
+            </div>
+          )}
+
+          {profile?.role === 'admin' && task.status === 'open' && (
+            <div className="detail-card" style={{ background: 'rgba(139, 92, 246, 0.05)', border: '1px solid rgba(139, 92, 246, 0.2)' }}>
+              <h3><UserCheck size={18} style={{ display: 'inline', verticalAlign: '-3px', marginRight: 6, color: '#8b5cf6' }} /> Admin Override: Manual Assignment</h3>
+              <p style={{ color: 'var(--gray)', fontSize: '0.9rem', marginBottom: '1rem' }}>Enter the WhatsApp Tasker's phone number exactly as registered to forcibly assign this task.</p>
+              <form onSubmit={handleAdminAssign} style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr) auto', gap: '0.8rem', alignItems: 'end' }}>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ color: '#8b5cf6' }}>Tasker Phone Number</label>
+                  <input type="tel" placeholder="+91 XXXXXXXXXX" value={adminPhone} onChange={(e) => setAdminPhone(e.target.value)} required />
+                </div>
+                <div className="form-group" style={{ marginBottom: 0 }}>
+                  <label style={{ color: '#8b5cf6' }}>Agreed Price (₹)</label>
+                  <input type="number" min="50" placeholder="e.g. 500" value={adminPrice} onChange={(e) => setAdminPrice(e.target.value)} required />
+                </div>
+                <button type="submit" className="btn-primary" style={{ background: '#8b5cf6', padding: '0.8rem 1.5rem', height: '42px', display: 'flex', alignItems: 'center' }} disabled={actionLoading}>
+                  {actionLoading ? 'Assigning...' : 'Assign'}
+                </button>
+              </form>
             </div>
           )}
 

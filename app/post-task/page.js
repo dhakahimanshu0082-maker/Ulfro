@@ -45,7 +45,7 @@ export default function PostTaskPage() {
   };
 
   return (
-    <ProtectedRoute requiredRole="client">
+    <ProtectedRoute>
       <Navbar />
       <div className="page-container">
         <div className="page-content" style={{ maxWidth: 700 }}>
